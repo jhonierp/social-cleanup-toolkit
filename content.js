@@ -32,6 +32,7 @@
       if (!corriendo || !viva()) break;
       if (r === 'ok') { cuenta[modo]++; fallos = 0; scrolls = 0; estado('Trabajando…'); }
       else if (r === 'scroll') { if (++scrolls > MAX_SCROLLS) { estado('Listo: no encontré más elementos.'); break; } estado('Buscando más…'); }
+      else if (r === 'sigue') { fallos = 0; estado('Trabajando…'); }
       else if (r === 'sin_items') { estado('Listo: no quedan elementos visibles.'); break; }
       else if (r.startsWith('saltado:')) { estado(`Salté "${r.slice(8)}" (no tiene esa opción).`); }
       else {

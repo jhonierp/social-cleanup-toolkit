@@ -6,7 +6,7 @@ Extensión multiuso para navegadores basados en Chromium (Opera, Chrome, Edge, B
 |---|---|---|
 | **Messenger** | `facebook.com/messages`, `messenger.com` | Eliminar chats · Archivar chats |
 | **WhatsApp** | `web.whatsapp.com` | Eliminar chats · Archivar chats |
-| **TikTok** | `tiktok.com` (perfil → *Republicaciones*) | Quitar compartidos (republicaciones / reposts) |
+| **TikTok** | `tiktok.com` (perfil → *Publicaciones compartidas*) | Quitar compartidos (reposts) |
 
 > ⚠️ **Eliminar chats es permanente.** No se pueden recuperar. Si solo quieres limpiar la bandeja, usa **Archivar**. Quitar una republicación de TikTok no borra el video original.
 
@@ -41,9 +41,10 @@ Extensión multiuso para navegadores basados en Chromium (Opera, Chrome, Edge, B
 3. Pulsa **Iniciar**. Procesa el primer chat de la lista, espera 1,5 s y sigue.
 
 ### TikTok — quitar compartidos
-1. Abre `tiktok.com`, entra a **tu perfil** y abre la pestaña **Republicaciones** (*Reposts*).
+1. Abre `tiktok.com` y entra a **tu perfil** (si no estás en la pestaña **Publicaciones compartidas**, la abre sola).
 2. Clic en el ícono → módulo **TikTok** → **Iniciar**.
-3. Abre cada video de la cuadrícula, pulsa **Compartir → Quitar republicación** y lo cierra.
+3. Abre el primer video compartido, pulsa la etiqueta **"Lo compartiste"** (eso lo quita) y pasa al siguiente con la flecha **⌄**. Ignora siempre tus propios videos.
+4. Termina cuando ya no hay más videos o tras 5 seguidos sin "Lo compartiste".
 
 Pulsa **Detener** cuando quieras. Se detiene sola cuando no quedan elementos o tras 8 fallos seguidos.
 
@@ -132,5 +133,6 @@ La extensión no envía datos a ningún servidor: todo ocurre en tu navegador.
 
 ## Changelog
 
+- **2.1.0** — TikTok: usa la etiqueta "Lo compartiste" y la flecha del visor; ya no se apaga al abrir un video ni entra a tus videos subidos.
 - **2.0.0** — Arquitectura por módulos; nuevos módulos **WhatsApp Web** y **TikTok** (quitar compartidos); selector de módulo en el popup.
 - **1.4.1** — Módulo Messenger: eliminar/archivar, contadores, saltar filas especiales, carga sin F5.

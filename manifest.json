@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Social Cleanup Toolkit",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Herramientas de limpieza para redes sociales: Messenger y WhatsApp (eliminar/archivar chats) y TikTok (quitar compartidos).",
   "permissions": [
     "storage",
