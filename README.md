@@ -1,118 +1,136 @@
 # Social Cleanup Toolkit
 
-Extensión multiuso para navegadores basados en Chromium (Opera, Chrome, Edge, Brave) con herramientas de limpieza para redes sociales.
+Extensión multiuso para navegadores basados en Chromium (Opera, Chrome, Edge, Brave) con herramientas de **limpieza masiva para redes sociales**. Automatiza los clics que harías a mano, uno por uno, mientras tú la vigilas.
 
-**Módulo actual — Messenger:** elimina o archiva automáticamente tus chats, uno por uno, desde `facebook.com/messages` o `messenger.com`.
+| Módulo | Sitio | Acciones |
+|---|---|---|
+| **Messenger** | `facebook.com/messages`, `messenger.com` | Eliminar chats · Archivar chats |
+| **WhatsApp** | `web.whatsapp.com` | Eliminar chats · Archivar chats |
+| **TikTok** | `tiktok.com` (perfil → *Republicaciones*) | Quitar compartidos (republicaciones / reposts) |
 
-Facebook no ofrece una opción para borrar todos los chats de una vez; esta extensión automatiza los clics que harías a mano (menú **…** → **Eliminar chat** → **Confirmar**) mientras tú la vigilas.
+> ⚠️ **Eliminar chats es permanente.** No se pueden recuperar. Si solo quieres limpiar la bandeja, usa **Archivar**. Quitar una republicación de TikTok no borra el video original.
 
-> ⚠️ **Eliminar es permanente.** Los chats eliminados no se pueden recuperar. Si solo quieres limpiar la bandeja, usa el modo **Archivar**.
+## Funciones
 
-## Funciones (módulo Messenger)
-
-- **Dos modos:** Eliminar (permanente) o Archivar (se puede deshacer desde *Chats archivados*).
-- **Contadores** de chats eliminados y archivados en la sesión.
-- **Interruptor de encendido/apagado** desde el ícono de la barra.
-- **Panel flotante** en la esquina inferior izquierda de Messenger con las mismas opciones.
+- **Selector de módulo** en el popup: Messenger, WhatsApp o TikTok. Si no estás en ese sitio, ofrece un botón para abrirlo.
+- **Contadores** por acción (eliminados, archivados, quitados) en la sesión.
+- **Interruptor de encendido/apagado** global.
+- **Panel flotante** en la esquina inferior izquierda de cada sitio con las mismas opciones.
 - **Iniciar / Detener** en cualquier momento.
-- **Salta filas especiales** como *Marketplace*, *Chats archivados* o *Solicitudes de mensajes*, y cualquier chat cuyo menú no tenga la opción.
-- **Se carga sola** en las pestañas de Facebook ya abiertas (no hace falta recargar con F5).
-- **Confirmación única:** pide confirmar la primera vez que vas a eliminar y luego no vuelve a preguntar.
-- Interfaz de Facebook en **español o inglés**.
+- **Salta lo que no aplica:** Marketplace, *Archivados*, solicitudes de mensajes, grupos de WhatsApp sin opción de eliminar, videos de TikTok sin republicación, etc.
+- **Se carga sola** en las pestañas ya abiertas (no hace falta F5).
+- **Confirmación única por módulo** antes de una acción permanente.
+- Interfaces en **español o inglés**.
 
 ## Instalación
 
-1. Clona o descarga este repositorio.
+1. Clona el repositorio:
    ```bash
    git clone https://github.com/jhonierp/social-cleanup-toolkit.git
    ```
-2. Abre la página de extensiones de tu navegador:
-   - Opera: `opera://extensions`
-   - Chrome: `chrome://extensions`
-   - Edge: `edge://extensions`
+2. Abre la página de extensiones: `opera://extensions`, `chrome://extensions` o `edge://extensions`.
 3. Activa el **Modo de desarrollador**.
-4. Pulsa **Cargar extensión sin empaquetar** (*Load unpacked*) y selecciona la carpeta del proyecto (la que contiene `manifest.json`).
-5. Fija el ícono rojo en la barra de extensiones para tenerlo a mano.
+4. Pulsa **Cargar extensión sin empaquetar** y selecciona la carpeta del proyecto (la que contiene `manifest.json`).
+5. Fija el ícono en la barra de extensiones.
 
 ## Uso
 
-1. Entra a <https://www.facebook.com/messages/t/> o <https://www.messenger.com>.
-2. Haz clic en el ícono de la extensión (o usa el panel de abajo a la izquierda).
-3. Elige el modo **Eliminar** o **Archivar**.
-4. Pulsa **Iniciar**. La extensión procesa el primer chat de la lista, espera 1,5 s y sigue con el siguiente.
-5. Pulsa **Detener** cuando quieras. Se detiene sola cuando no quedan chats o tras 8 fallos seguidos.
+### Messenger / WhatsApp
+1. Abre `facebook.com/messages` o `web.whatsapp.com` (con sesión iniciada).
+2. Clic en el ícono → elige el módulo → elige **Eliminar** o **Archivar**.
+3. Pulsa **Iniciar**. Procesa el primer chat de la lista, espera 1,5 s y sigue.
 
-Recomendación: la primera vez, prueba con **Archivar** en 2 o 3 chats para comprobar que funciona con tu versión de Facebook.
+### TikTok — quitar compartidos
+1. Abre `tiktok.com`, entra a **tu perfil** y abre la pestaña **Republicaciones** (*Reposts*).
+2. Clic en el ícono → módulo **TikTok** → **Iniciar**.
+3. Abre cada video de la cuadrícula, pulsa **Compartir → Quitar republicación** y lo cierra.
+
+Pulsa **Detener** cuando quieras. Se detiene sola cuando no quedan elementos o tras 8 fallos seguidos.
+
+Recomendación: la primera vez prueba con 2 o 3 elementos (en Messenger/WhatsApp, mejor con **Archivar**) para comprobar que funciona con tu versión del sitio.
 
 ## Estructura
 
 ```
 social-cleanup-toolkit/
-├── manifest.json    # Manifest V3: permisos, popup, content script y service worker
-├── background.js    # Inyecta el script en pestañas de Facebook abiertas al instalar/actualizar
-├── content.js       # Lógica principal: panel flotante, búsqueda de botones y ciclo de borrado/archivado
-├── popup.html       # Menú del ícono de la barra
-├── popup.js         # Interruptor, modo, contadores e Iniciar/Detener desde el popup
-└── icon*.png        # Íconos 16, 32, 48 y 128 px
+├── manifest.json          # Manifest V3
+├── background.js          # Service worker: inyecta los scripts en pestañas ya abiertas
+├── modulos.js             # Lista de módulos (id, URL, scripts) compartida por popup y background
+├── content.js             # Núcleo: panel flotante, ciclo, contadores, mensajes con el popup
+├── adapters/
+│   ├── helpers.js         # Utilidades comunes (esperas, hover, clic derecho, búsqueda por texto)
+│   ├── messenger.js       # Módulo Messenger
+│   ├── whatsapp.js        # Módulo WhatsApp Web
+│   └── tiktok.js          # Módulo TikTok
+├── popup.html / popup.js  # Menú del ícono: interruptor, selector de módulo, modos y contadores
+└── icon*.png
 ```
 
-## Cómo funciona
+## Arquitectura
 
-`content.js` recorre la lista de chats (`[role="grid"] [role="row"]`) y, para cada fila:
+Cada sitio carga `helpers.js` + **su adaptador** + `content.js`. El adaptador se registra en `globalThis.SCT_ADAPTERS` con esta forma:
 
-1. Simula el paso del mouse para que Facebook muestre el botón **…** (*Más opciones*).
-2. Abre el menú y busca la opción **Eliminar chat** / **Archivar chat** por su texto.
-3. En modo eliminar, pulsa el botón de confirmación del diálogo.
-4. Espera a que la fila desaparezca y pasa a la siguiente.
+```js
+SCT_ADAPTERS.miSitio = {
+  id: 'miSitio',
+  nombre: 'Mi sitio',
+  url: 'https://...',            // a dónde lleva el botón "Abrir"
+  dominio: () => boolean,        // ¿esta pestaña es de este sitio?
+  enPagina: () => boolean,       // ¿estamos en la página donde se puede trabajar?
+  ayuda: 'Texto si no está en la página correcta',
+  modos: {
+    eliminar: { etiqueta: 'Eliminar', contador: 'eliminados', color: '#e41e3f', permanente: true },
+  },
+  async procesarUno(modo) {
+    // procesa UN elemento y devuelve:
+    // 'ok' | 'scroll' | 'sin_items' | 'saltado:<nombre>' | '<código de error>'
+  },
+};
+```
 
-El panel se construye con `document.createElement` (sin `innerHTML`), porque Facebook aplica *Trusted Types* y bloquea `innerHTML` incluso en extensiones.
+`content.js` se encarga del resto (panel, ciclo, pausas, contadores, confirmación, popup).
 
-### Ajustes
+### Agregar un módulo nuevo
+1. Crea `adapters/<sitio>.js` con la forma de arriba.
+2. Agrégalo en `modulos.js`.
+3. Agrega su entrada en `content_scripts` y `host_permissions` de `manifest.json`.
 
-Al inicio de `content.js` puedes cambiar:
+## Ajustes
 
-| Constante | Valor por defecto | Para qué sirve |
-|---|---|---|
-| `PAUSA_MS` | `1500` | Pausa entre chats (ms). Súbela si Facebook va lento. |
-| `MAX_FALLOS` | `8` | Fallos seguidos antes de detenerse. |
-| `RE_MAS_OPCIONES` | — | Textos del botón **…** |
-| `RE_OPCION` | — | Textos de *Eliminar chat* / *Archivar chat* |
-| `RE_CONFIRMAR` | — | Texto del botón de confirmación |
-| `RE_SALTAR` | — | Filas que se saltan siempre (Marketplace, etc.) |
+Al inicio de `content.js`: `PAUSA_MS` (pausa entre elementos, 1500 ms), `MAX_FALLOS` (8) y `MAX_SCROLLS` (15).
+Los textos que busca cada sitio están como expresiones regulares (`RE_...`) al inicio de cada adaptador.
 
 ## Solución de problemas
 
-| Mensaje en el panel | Causa probable | Qué hacer |
+| Mensaje | Causa probable | Qué hacer |
 |---|---|---|
-| `sin_boton` | No aparece el botón **…** al pasar el mouse | Facebook cambió la página: revisa la consola (`Ctrl+Shift+J`), busca líneas `[Social Cleanup]` y ajusta `RE_MAS_OPCIONES`. |
-| `Salté "..."` | Ese chat no tiene la opción en su menú | Normal (por ejemplo, Marketplace). |
+| `sin_boton` | No aparece el botón **…** del chat | El sitio cambió: abre la consola (`Ctrl+Shift+J`), busca líneas `[Social Cleanup]` y ajusta las `RE_...` del adaptador. |
+| `Salté "..."` | Ese elemento no tiene la opción | Normal (Marketplace, grupos de WhatsApp, videos sin republicación). |
 | `sin_confirmacion` | No encontró el botón del diálogo | Ajusta `RE_CONFIRMAR`. |
-| No aparece el panel | La extensión está apagada o la pestaña no es de mensajes | Enciéndela desde el ícono y entra a `facebook.com/messages`. |
+| `sin_video` (TikTok) | No se abrió el visor del video | Sube `PAUSA_MS` o revisa la consola. |
+| No aparece el panel | Extensión apagada o página incorrecta | Enciéndela y entra a la página indicada en el popup. |
 
-Después de editar el código, pulsa **recargar** en la tarjeta de la extensión en `opera://extensions`.
+Después de editar el código, pulsa **recargar** en la tarjeta de la extensión.
 
 ## Limitaciones
 
-- Depende de la estructura actual de la web de Facebook, que cambia con frecuencia; puede requerir ajustar los textos que busca.
-- Al eliminar un chat solo se borra **de tu cuenta**; la otra persona conserva su copia.
+- Depende de la estructura actual de cada sitio, que cambia con frecuencia; puede requerir ajustar los textos que busca.
+- Eliminar un chat solo lo borra **de tu cuenta**; la otra persona conserva su copia.
+- En WhatsApp, los grupos no se pueden eliminar sin salir primero: se saltan.
 - Los contadores se reinician al recargar la página.
-- Automatizar acciones en Facebook puede ir en contra de sus condiciones de uso. Úsala bajo tu responsabilidad y con tu propia cuenta.
+- Automatizar acciones puede ir en contra de las condiciones de uso de estos sitios. Úsala bajo tu responsabilidad y con tus propias cuentas.
 
 ## Permisos
 
 | Permiso | Uso |
 |---|---|
-| `storage` | Guardar encendido/apagado, modo y la confirmación única. |
-| `scripting` | Cargar el script en pestañas ya abiertas sin recargar. |
-| `host_permissions` (`facebook.com`, `messenger.com`) | Funcionar solo en esos sitios. |
+| `storage` | Guardar encendido/apagado, módulo y modo elegidos, y la confirmación única. |
+| `scripting` | Cargar los scripts en pestañas ya abiertas sin recargar. |
+| `host_permissions` | Funcionar solo en facebook.com, messenger.com, web.whatsapp.com y tiktok.com. |
 
 La extensión no envía datos a ningún servidor: todo ocurre en tu navegador.
 
-## Hoja de ruta
+## Changelog
 
-- [x] Messenger: eliminar y archivar chats en lote
-- [ ] Más módulos (otras redes y bandejas de mensajes)
-
-## Versión
-
-**1.4.1**
+- **2.0.0** — Arquitectura por módulos; nuevos módulos **WhatsApp Web** y **TikTok** (quitar compartidos); selector de módulo en el popup.
+- **1.4.1** — Módulo Messenger: eliminar/archivar, contadores, saltar filas especiales, carga sin F5.

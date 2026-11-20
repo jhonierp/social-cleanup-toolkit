@@ -1,7 +1,10 @@
-// Al instalar o actualizar la extensión, se carga en las pestañas de Facebook/Messenger ya abiertas (sin F5).
+importScripts('modulos.js');
+
+// Al instalar o actualizar, se carga en las pestañas ya abiertas de cada sitio (sin F5)
 chrome.runtime.onInstalled.addListener(async () => {
-  const tabs = await chrome.tabs.query({ url: ['https://www.facebook.com/*', 'https://www.messenger.com/*'] });
+  const tabs = await chrome.tabs.query({});
   for (const t of tabs) {
-    chrome.scripting.executeScript({ target: { tabId: t.id }, files: ['content.js'] }).catch(() => {});
+    const m = SCT_MODULOS.find((x) => x.re.test(t.url || ''));
+    if (m) chrome.scripting.executeScript({ target: { tabId: t.id }, files: m.js }).catch(() => {});
   }
 });

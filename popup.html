@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { margin:0; width:260px; font:13px system-ui,sans-serif; background:#1c1e21; color:#fff; }
+  body { margin:0; width:290px; font:13px system-ui,sans-serif; background:#1c1e21; color:#fff; }
   .wrap { padding:14px; }
   h1 { font-size:14px; margin:0 0 12px; }
   .fila { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
@@ -13,43 +13,42 @@
   .slider:before { content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
   input:checked + .slider { background:#31a24c; }
   input:checked + .slider:before { transform:translateX(18px); }
+  .mods { display:flex; gap:6px; margin-bottom:12px; }
+  .mod { flex:1; padding:7px 4px; border:2px solid transparent; border-radius:8px; background:#242526; color:#fff; cursor:pointer; font:inherit; font-size:12px; }
+  .mod.on { border-color:var(--c); background:#2f3031; font-weight:600; }
   .contadores { display:flex; gap:8px; margin-bottom:12px; }
   .contador { flex:1; background:#242526; border-radius:8px; padding:8px; text-align:center; }
   .num { font-size:24px; font-weight:700; }
   .lbl { font-size:11px; opacity:.7; }
   .modos { display:flex; gap:6px; margin-bottom:12px; }
-  .modos button { background:#3a3b3c; }
-  #m-eliminar.on { background:#e41e3f; }
-  #m-archivar.on { background:#1877f2; }
   #estado { background:#242526; border-radius:8px; padding:8px; margin-bottom:12px; min-height:16px; opacity:.9; }
   .botones { display:flex; gap:8px; }
-  button { flex:1; padding:8px; border:0; border-radius:6px; color:#fff; cursor:pointer; font:inherit; }
+  button.b { flex:1; padding:8px; border:0; border-radius:6px; color:#fff; cursor:pointer; font:inherit; background:#3a3b3c; }
   #iniciar { background:#31a24c; }
-  #detener { background:#3a3b3c; }
+  #abrir { width:100%; background:#3a3b3c; margin-bottom:12px; display:none; }
   button:disabled { opacity:.4; cursor:default; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Social Cleanup Toolkit · Messenger</h1>
+  <h1>Social Cleanup Toolkit</h1>
   <div class="fila">
     <span id="txtActivo">Encendida</span>
     <label class="switch"><input type="checkbox" id="activo"><span class="slider"></span></label>
   </div>
-  <div class="contadores">
-    <div class="contador"><div class="num" id="n-eliminar" style="color:#ff6b81">0</div><div class="lbl">eliminados</div></div>
-    <div class="contador"><div class="num" id="n-archivar" style="color:#4dabf7">0</div><div class="lbl">archivados</div></div>
-  </div>
-  <div class="modos">
-    <button id="m-eliminar">Eliminar</button>
-    <button id="m-archivar">Archivar</button>
+  <div class="mods" id="mods"></div>
+  <button class="b" id="abrir"></button>
+  <div id="panelModulo">
+    <div class="contadores" id="contadores"></div>
+    <div class="modos" id="modos"></div>
   </div>
   <div id="estado">…</div>
   <div class="botones">
-    <button id="iniciar">Iniciar</button>
-    <button id="detener">Detener</button>
+    <button class="b" id="iniciar">Iniciar</button>
+    <button class="b" id="detener">Detener</button>
   </div>
 </div>
+<script src="modulos.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>

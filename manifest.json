@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Social Cleanup Toolkit",
-  "version": "1.4.1",
-  "description": "Herramientas de limpieza para redes sociales. Módulo Messenger: elimina o archiva tus chats en lote, con contador.",
+  "version": "2.0.0",
+  "description": "Herramientas de limpieza para redes sociales: Messenger y WhatsApp (eliminar/archivar chats) y TikTok (quitar compartidos).",
   "permissions": [
     "storage",
     "scripting"
@@ -30,6 +30,30 @@
         "https://www.messenger.com/*"
       ],
       "js": [
+        "adapters/helpers.js",
+        "adapters/messenger.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "adapters/helpers.js",
+        "adapters/whatsapp.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.tiktok.com/*"
+      ],
+      "js": [
+        "adapters/helpers.js",
+        "adapters/tiktok.js",
         "content.js"
       ],
       "run_at": "document_idle"
@@ -37,7 +61,9 @@
   ],
   "host_permissions": [
     "https://www.facebook.com/*",
-    "https://www.messenger.com/*"
+    "https://www.messenger.com/*",
+    "https://web.whatsapp.com/*",
+    "https://*.tiktok.com/*"
   ],
   "background": {
     "service_worker": "background.js"
