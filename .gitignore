@@ -1,0 +1,6 @@
+# Claves y paquetes generados al "Empaquetar extensión" (no subir la .pem: es tu clave privada)
+*.pem
+*.crx
+*.zip
+.DS_Store
+Thumbs.db

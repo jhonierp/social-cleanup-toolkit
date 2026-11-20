@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Social Cleanup Toolkit",
+  "version": "1.4.1",
+  "description": "Herramientas de limpieza para redes sociales. Módulo Messenger: elimina o archiva tus chats en lote, con contador.",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "action": {
+    "default_title": "Social Cleanup Toolkit",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://www.messenger.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://www.messenger.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
